@@ -7,7 +7,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { ChevronDown, Waves, Menu, X } from 'lucide-react';
+import { ChevronDown, Menu, X } from 'lucide-react';
+import logoImage from '@/assets/aquacreds_logo.png';
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -58,7 +59,7 @@ export function Navbar() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-            <Waves className="h-8 w-8 text-primary" />
+            <img src={logoImage} alt="AquaCreds" className="h-8 w-8" />
             <span className="font-sora font-bold text-xl text-foreground">AquaCreds</span>
           </Link>
 

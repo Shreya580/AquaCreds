@@ -237,24 +237,15 @@ export default function Marketplace() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProjects.map((project) => (
             <Card key={project.id} className="hover-lift ocean-shadow overflow-hidden">
-              <div className="relative h-48">
-                <img
-                  src={project.ecosystem === 'Mangroves' ? 
-                    'https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' :
-                    project.ecosystem === 'Seagrass' ?
-                    'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80' :
-                    'https://images.unsplash.com/photo-1583212292454-1fe6229603b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-                  }
-                  alt={project.title}
-                  className="w-full h-full object-cover"
-                />
+              <div className="relative h-48 bg-gradient-to-br from-ocean-start to-ocean-end flex items-center justify-center">
                 <div className="absolute top-4 right-4">
                   <span className="bg-success text-white px-2 py-1 rounded-full text-xs font-medium">
                     <CheckCircle className="inline h-3 w-3 mr-1" />
                     Verified
                   </span>
                 </div>
-                <div className="absolute bottom-4 left-4">
+                <div className="text-center text-white">
+                  <TreePine className="h-16 w-16 mx-auto mb-2 opacity-80" />
                   <span className="bg-black/50 text-white px-2 py-1 rounded text-xs">
                     {project.ecosystem}
                   </span>

@@ -5,6 +5,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { ArrowRight, Shield, Waves, TreePine, TrendingUp } from 'lucide-react';
+import heroVideo from '@/assets/Agritrace.mp4';
+import mangroveBackground from '@/assets/mangrove-hero-bg.jpg';
 
 export default function Index() {
   useEffect(() => {
@@ -22,10 +24,15 @@ export default function Index() {
       <Navbar />
       
       {/* Hero Section */}
-      <section className="relative hero-gradient min-h-[80vh] flex items-center overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-y-6 scale-150"></div>
+      <section className="relative min-h-[80vh] flex items-center overflow-hidden">
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <img
+            src={mangroveBackground}
+            alt="Mangrove forest background"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/40"></div>
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -52,7 +59,7 @@ export default function Index() {
                 <Button 
                   size="lg" 
                   variant="outline" 
-                  className="px-8 py-6 text-lg font-semibold border-white text-white hover:bg-white hover:text-primary"
+                  className="px-8 py-6 text-lg font-semibold border-white text-blue-400 hover:bg-white hover:text-primary"
                   onClick={() => document.getElementById('what-is-blue-carbon')?.scrollIntoView({ behavior: 'smooth' })}
                 >
                   Learn More
@@ -60,18 +67,20 @@ export default function Index() {
               </div>
             </div>
 
-            {/* Hero Image */}
+            {/* Hero Video */}
             <div className="relative animate-fade-in opacity-0">
               <div className="relative z-10 rounded-2xl overflow-hidden border-4 border-white/20 card-shadow">
-                <img
-                  src="https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-                  alt="Mangrove restoration project"
+                <video
+                  src={heroVideo}
+                  autoPlay
+                  muted
+                  loop
                   className="w-full h-80 object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
                 <div className="absolute bottom-4 left-4 text-white">
-                  <p className="text-sm font-medium">Sundarbans Restoration Project</p>
-                  <p className="text-xs opacity-80">West Bengal, India</p>
+                  <p className="text-sm font-medium">AquaCreds Platform Demo</p>
+                  <p className="text-xs opacity-80">Blue Carbon Trading</p>
                 </div>
               </div>
             </div>
