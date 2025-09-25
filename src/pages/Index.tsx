@@ -5,7 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Navbar } from '@/components/Navbar';
 import { Footer } from '@/components/Footer';
 import { ArrowRight, Shield, Waves, TreePine, TrendingUp } from 'lucide-react';
-import heroVideo from '@/assets/Agritrace.mp4';
+import heroVideo from '@/assets/Blue_Carbon.mp4';
 import mangroveBackground from '@/assets/mangrove-hero-bg.jpg';
 
 export default function Index() {
