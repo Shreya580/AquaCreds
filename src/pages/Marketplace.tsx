@@ -16,9 +16,9 @@ export default function Marketplace() {
   const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filters, setFilters] = useState({
-    ecosystem: '',
+    ecosystem: 'all',
     location: '',
-    priceRange: ''
+    priceRange: 'all'
   });
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [purchaseAmount, setPurchaseAmount] = useState(1);
@@ -50,7 +50,7 @@ export default function Marketplace() {
     }
 
     // Ecosystem filter
-    if (filters.ecosystem) {
+    if (filters.ecosystem && filters.ecosystem !== 'all') {
       filtered = filtered.filter(p => p.ecosystem === filters.ecosystem);
     }
 
@@ -60,7 +60,7 @@ export default function Marketplace() {
     }
 
     // Price range filter
-    if (filters.priceRange) {
+    if (filters.priceRange && filters.priceRange !== 'all') {
       const [min, max] = filters.priceRange.split('-').map(Number);
       filtered = filtered.filter(p => p.pricePerCredit >= min && p.pricePerCredit <= max);
     }
@@ -206,7 +206,7 @@ export default function Marketplace() {
                 <SelectValue placeholder="Ecosystem Type" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Ecosystems</SelectItem>
+                <SelectItem value="all">All Ecosystems</SelectItem>
                 <SelectItem value="Mangroves">Mangroves</SelectItem>
                 <SelectItem value="Seagrass">Seagrass</SelectItem>
                 <SelectItem value="Coral Reefs">Coral Reefs</SelectItem>
@@ -224,7 +224,7 @@ export default function Marketplace() {
                 <SelectValue placeholder="Price Range" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">All Prices</SelectItem>
+                <SelectItem value="all">All Prices</SelectItem>
                 <SelectItem value="0-400">₹0 - ₹400</SelectItem>
                 <SelectItem value="400-500">₹400 - ₹500</SelectItem>
                 <SelectItem value="500-1000">₹500+</SelectItem>
