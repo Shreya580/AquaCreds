@@ -72,8 +72,7 @@ export default function Index() {
               <div className="relative z-10 rounded-2xl overflow-hidden border-4 border-white/20 card-shadow">
                 <video
                   src={heroVideo}
-                  autoPlay
-                  muted
+                  controls
                   loop
                   className="w-full h-80 object-cover"
                 />
