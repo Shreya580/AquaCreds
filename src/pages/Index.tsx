@@ -73,14 +73,11 @@ export default function Index() {
                 <video
                   src={heroVideo}
                   controls
+                  controlsList=""
                   loop
+                  preload="metadata"
                   className="w-full h-80 object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                <div className="absolute bottom-4 left-4 text-white">
-                  <p className="text-sm font-medium">AquaCreds Platform Demo</p>
-                  <p className="text-xs opacity-80">Blue Carbon Trading</p>
-                </div>
               </div>
             </div>
           </div>
