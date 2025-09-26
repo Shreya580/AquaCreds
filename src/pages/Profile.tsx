@@ -124,41 +124,63 @@ export default function Profile() {
           </div>
 
           {/* Quick Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <Card className="hover-lift">
-              <CardContent className="p-6 text-center">
-                <TreePine className="h-8 w-8 text-success mx-auto mb-2" />
-                <p className="text-2xl font-bold">{stats.projects}</p>
-                <p className="text-sm text-muted-foreground">Projects</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="hover-lift">
-              <CardContent className="p-6 text-center">
-                <CreditCard className="h-8 w-8 text-primary mx-auto mb-2" />
-                <p className="text-2xl font-bold">{stats.creditsPurchased.toLocaleString()}</p>
-                <p className="text-sm text-muted-foreground">Credits Purchased</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="hover-lift">
-              <CardContent className="p-6 text-center">
-                <TrendingUp className="h-8 w-8 text-coral-accent mx-auto mb-2" />
-                <p className="text-2xl font-bold">{stats.totalCO2Offset.toFixed(1)} tons</p>
-                <p className="text-sm text-muted-foreground">Total CO₂ Offset</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="hover-lift">
-              <CardContent className="p-6 text-center">
-                <div className="h-8 w-8 bg-warning/20 rounded-full flex items-center justify-center mx-auto mb-2">
-                  <span className="text-warning font-bold">₹</span>
-                </div>
-                <p className="text-2xl font-bold">₹{stats.walletBalance.toLocaleString()}</p>
-                <p className="text-sm text-muted-foreground">Wallet Balance</p>
-              </CardContent>
-            </Card>
-          </div>
+          {user.role !== 'Verifier' && (
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <Card className="hover-lift">
+                <CardContent className="p-6 text-center">
+                  <TreePine className="h-8 w-8 text-success mx-auto mb-2" />
+                  <p className="text-2xl font-bold">{stats.projects}</p>
+                  <p className="text-sm text-muted-foreground">Projects</p>
+                </CardContent>
+              </Card>
+              
+              <Card className="hover-lift">
+                <CardContent className="p-6 text-center">
+                  <CreditCard className="h-8 w-8 text-primary mx-auto mb-2" />
+                  <p className="text-2xl font-bold">{stats.creditsPurchased.toLocaleString()}</p>
+                  <p className="text-sm text-muted-foreground">Credits Purchased</p>
+                </CardContent>
+              </Card>
+              
+              <Card className="hover-lift">
+                <CardContent className="p-6 text-center">
+                  <TrendingUp className="h-8 w-8 text-coral-accent mx-auto mb-2" />
+                  <p className="text-2xl font-bold">{stats.totalCO2Offset.toFixed(1)} tons</p>
+                  <p className="text-sm text-muted-foreground">Total CO₂ Offset</p>
+                </CardContent>
+              </Card>
+              
+              <Card className="hover-lift">
+                <CardContent className="p-6 text-center">
+                  <div className="h-8 w-8 bg-warning/20 rounded-full flex items-center justify-center mx-auto mb-2">
+                    <span className="text-warning font-bold">₹</span>
+                  </div>
+                  <p className="text-2xl font-bold">₹{stats.walletBalance.toLocaleString()}</p>
+                  <p className="text-sm text-muted-foreground">Wallet Balance</p>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+
+          {user.role === 'Verifier' && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Card className="hover-lift">
+                <CardContent className="p-6 text-center">
+                  <TreePine className="h-8 w-8 text-success mx-auto mb-2" />
+                  <p className="text-2xl font-bold">{stats.projects}</p>
+                  <p className="text-sm text-muted-foreground">Projects</p>
+                </CardContent>
+              </Card>
+              
+              <Card className="hover-lift">
+                <CardContent className="p-6 text-center">
+                  <TrendingUp className="h-8 w-8 text-coral-accent mx-auto mb-2" />
+                  <p className="text-2xl font-bold">{stats.totalCO2Offset.toFixed(1)} tons</p>
+                  <p className="text-sm text-muted-foreground">Total CO₂ Offset</p>
+                </CardContent>
+              </Card>
+            </div>
+          )}
 
           {/* Profile Form */}
           <Card className="ocean-shadow">
