@@ -10,6 +10,9 @@ import { Footer } from '@/components/Footer';
 import { useToast } from '@/hooks/use-toast';
 import { getProjects, Project, getCurrentUser, savePurchase, updateUserWallet, getUserWallet, addNotification, saveProject } from '@/utils/localStorage';
 import { Search, Filter, MapPin, TreePine, ShoppingCart, CheckCircle } from 'lucide-react';
+import mangroveImage from '@/assets/mangrove-project.jpg';
+import seagrassImage from '@/assets/seagrass-project.jpg';
+import coralImage from '@/assets/coral-project.jpg';
 
 export default function Marketplace() {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -67,6 +70,19 @@ export default function Marketplace() {
 
     setFilteredProjects(filtered);
   }, [searchTerm, filters, projects]);
+
+  const getProjectImage = (ecosystem: string) => {
+    switch (ecosystem) {
+      case 'Mangroves':
+        return mangroveImage;
+      case 'Seagrass':
+        return seagrassImage;
+      case 'Coral Reefs':
+        return coralImage;
+      default:
+        return mangroveImage;
+    }
+  };
 
   const handlePurchase = async () => {
     if (!user) {
@@ -237,16 +253,21 @@ export default function Marketplace() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProjects.map((project) => (
             <Card key={project.id} className="hover-lift ocean-shadow overflow-hidden">
-              <div className="relative h-48 bg-gradient-to-br from-ocean-start to-ocean-end flex items-center justify-center">
+              <div className="relative h-48 overflow-hidden">
+                <img 
+                  src={getProjectImage(project.ecosystem)}
+                  alt={`${project.ecosystem} restoration project`}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <div className="absolute top-4 right-4">
                   <span className="bg-success text-white px-2 py-1 rounded-full text-xs font-medium">
                     <CheckCircle className="inline h-3 w-3 mr-1" />
                     Verified
                   </span>
                 </div>
-                <div className="text-center text-white">
-                  <TreePine className="h-16 w-16 mx-auto mb-2 opacity-80" />
-                  <span className="bg-black/50 text-white px-2 py-1 rounded text-xs">
+                <div className="absolute bottom-4 left-4">
+                  <span className="bg-black/70 text-white px-3 py-1 rounded-full text-sm font-medium">
                     {project.ecosystem}
                   </span>
                 </div>
