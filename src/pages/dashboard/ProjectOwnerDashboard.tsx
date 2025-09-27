@@ -273,7 +273,7 @@ export default function ProjectOwnerDashboard() {
                           <SelectContent>
                             <SelectItem value="Mangroves">Mangroves</SelectItem>
                             <SelectItem value="Seagrass">Seagrass</SelectItem>
-                            <SelectItem value="Coral Reefs">Coral Reefs</SelectItem>
+                            <SelectItem value="Salt Marsh">Salt Marsh</SelectItem>
                           </SelectContent>
                         </Select>
                       </div>

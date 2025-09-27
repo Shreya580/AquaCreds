@@ -250,8 +250,8 @@ export default function AdminDashboard() {
               </CardHeader>
               
               <CardContent>
-                <div className="grid grid-cols-6 gap-4 text-center">
-                  {[1250, 1820, 2150, 1980, 2450, 2850].map((revenue: number, index: number) => (
+                 <div className="grid grid-cols-6 gap-4 text-center">
+                  {[120, 150, 180, 135, 165, 190].map((revenue: number, index: number) => (
                     <div key={index} className="space-y-2">
                       <div className="text-2xl font-bold text-primary">
                         ₹{revenue}k
@@ -262,7 +262,7 @@ export default function AdminDashboard() {
                       <div className="w-full bg-muted rounded-full h-2">
                         <div 
                           className="bg-primary h-2 rounded-full" 
-                          style={{ width: `${(revenue / 2850) * 100}%` }}
+                          style={{ width: `${(revenue / 190) * 100}%` }}
                         />
                       </div>
                     </div>

@@ -84,22 +84,6 @@ export function initializeDemoData() {
         co2Offset: 850,
         createdAt: '2024-02-10',
         verifiedAt: '2024-02-25'
-      },
-      {
-        id: '3',
-        title: 'Andaman Coral Reef Protection',
-        location: 'Andaman & Nicobar Islands, India',
-        ecosystem: 'Coral Reefs',
-        description: 'Coral reef restoration and protection initiative in the pristine waters of Andaman Islands.',
-        creditsGenerated: 950,
-        creditsAvailable: 400,
-        pricePerCredit: 520,
-        status: 'Approved',
-        ownerId: 'demo-owner-3',
-        ownerName: 'Island Ecology Foundation',
-        co2Offset: 950,
-        createdAt: '2024-01-20',
-        verifiedAt: '2024-02-05'
       }
     ];
     localStorage.setItem('aquacreds_projects', JSON.stringify(demoProjects));
