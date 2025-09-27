@@ -313,26 +313,26 @@ export default function VerifierDashboard() {
                                       />
                                     </div>
 
-                                    {/* Action Buttons */}
-                                    {selectedProject.status === 'Pending' && (
-                                      <div className="flex space-x-4">
-                                        <Button
-                                          onClick={() => handleVerification(selectedProject.id, 'Approved')}
-                                          className="flex-1 bg-success hover:bg-success/90 text-white"
-                                        >
-                                          <CheckCircle className="mr-2 h-4 w-4" />
-                                          Approve Project
-                                        </Button>
-                                        <Button
-                                          onClick={() => handleVerification(selectedProject.id, 'Rejected')}
-                                          variant="destructive"
-                                          className="flex-1"
-                                        >
-                                          <XCircle className="mr-2 h-4 w-4" />
-                                          Reject Project
-                                        </Button>
-                                      </div>
-                                    )}
+                                     {/* Action Buttons - Approve and Reject at the end */}
+                                     {selectedProject.status === 'Pending' && (
+                                       <div className="flex space-x-4">
+                                         <Button
+                                           onClick={() => handleVerification(selectedProject.id, 'Approved')}
+                                           className="flex-1 bg-success hover:bg-success/90 text-white"
+                                         >
+                                           <CheckCircle className="mr-2 h-4 w-4" />
+                                           Approve
+                                         </Button>
+                                         <Button
+                                           onClick={() => handleVerification(selectedProject.id, 'Rejected')}
+                                           variant="destructive"
+                                           className="flex-1"
+                                         >
+                                           <XCircle className="mr-2 h-4 w-4" />
+                                           Reject
+                                         </Button>
+                                       </div>
+                                     )}
 
                                     {selectedProject.status !== 'Pending' && (
                                       <div className="p-4 bg-muted rounded-lg">

@@ -24,8 +24,10 @@ export interface Project {
   ownerName: string;
   image?: string;
   co2Offset: number;
+  saplingsPlanted?: number;
   createdAt: string;
   verifiedAt?: string;
+  verificationNotes?: string;
 }
 
 export interface Purchase {

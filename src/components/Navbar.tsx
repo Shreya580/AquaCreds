@@ -103,11 +103,8 @@ export function Navbar() {
               </div>
             ) : (
               <div className="flex items-center space-x-4">
-                <Link to="/signin">
-                  <Button variant="ghost">Sign In</Button>
-                </Link>
                 <Link to="/login">
-                  <Button className="btn-ocean">Login</Button>
+                  <Button className="btn-ocean">Log In</Button>
                 </Link>
               </div>
             )}
@@ -160,11 +157,8 @@ export function Navbar() {
 
             {!user && (
               <div className="pt-4 border-t border-border space-y-2">
-                <Link to="/signin" className="block">
-                  <Button variant="ghost" className="w-full">Sign In</Button>
-                </Link>
                 <Link to="/login" className="block">
-                  <Button className="btn-ocean w-full">Login</Button>
+                  <Button className="btn-ocean w-full">Log In</Button>
                 </Link>
               </div>
             )}

@@ -128,7 +128,7 @@ export default function Login() {
               </div>
 
               <Button type="submit" className="w-full btn-ocean" disabled={isLoading}>
-                {isLoading ? 'Signing In...' : 'Sign In'}
+                {isLoading ? 'Logging In...' : 'Log In'}
               </Button>
 
               <div className="text-center text-sm">

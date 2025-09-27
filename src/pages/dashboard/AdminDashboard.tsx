@@ -20,7 +20,7 @@ export default function AdminDashboard() {
   const [stats, setStats] = useState({
     totalUsers: 0,
     totalProjects: 0,
-    totalCreditsTraded: 0,
+    
     totalRevenue: 0,
     pendingVerifications: 0,
     activeProjects: 0
@@ -45,7 +45,6 @@ export default function AdminDashboard() {
     setAnalytics(analyticsData);
 
     // Calculate stats
-    const totalCredits = allPurchases.reduce((sum, p) => sum + p.credits, 0);
     const totalRevenue = allPurchases.reduce((sum, p) => sum + p.totalAmount, 0);
     const pendingProjects = allProjects.filter(p => p.status === 'Pending').length;
     const activeProjects = allProjects.filter(p => p.status === 'Approved').length;
@@ -53,7 +52,6 @@ export default function AdminDashboard() {
     setStats({
       totalUsers: allUsers.length,
       totalProjects: allProjects.length,
-      totalCreditsTraded: totalCredits,
       totalRevenue,
       pendingVerifications: pendingProjects,
       activeProjects
@@ -102,7 +100,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
           <Card className="hover-lift">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
@@ -127,17 +125,6 @@ export default function AdminDashboard() {
             </CardContent>
           </Card>
 
-          <Card className="hover-lift">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">Credits Traded</p>
-                  <p className="text-2xl font-bold">{stats.totalCreditsTraded.toLocaleString()}</p>
-                </div>
-                <CreditCard className="h-8 w-8 text-coral-accent" />
-              </div>
-            </CardContent>
-          </Card>
 
           <Card className="hover-lift">
             <CardContent className="p-6">

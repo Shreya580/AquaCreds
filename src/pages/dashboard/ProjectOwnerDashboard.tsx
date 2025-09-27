@@ -22,9 +22,7 @@ export default function ProjectOwnerDashboard() {
     location: '',
     ecosystem: '',
     description: '',
-    creditsGenerated: 0,
-    pricePerCredit: 0,
-    co2Offset: 0
+    saplingsPlanted: 0
   });
   const [stats, setStats] = useState({
     totalProjects: 0,
@@ -80,13 +78,14 @@ export default function ProjectOwnerDashboard() {
       location: newProject.location,
       ecosystem: newProject.ecosystem,
       description: newProject.description,
-      creditsGenerated: newProject.creditsGenerated,
-      creditsAvailable: newProject.creditsGenerated,
-      pricePerCredit: newProject.pricePerCredit,
+      creditsGenerated: 0,
+      creditsAvailable: 0,
+      pricePerCredit: 0,
       status: 'Pending',
       ownerId: user.id,
       ownerName: user.name,
-      co2Offset: newProject.co2Offset,
+      co2Offset: 0,
+      saplingsPlanted: newProject.saplingsPlanted,
       createdAt: new Date().toISOString()
     };
 
@@ -117,9 +116,7 @@ export default function ProjectOwnerDashboard() {
       location: '',
       ecosystem: '',
       description: '',
-      creditsGenerated: 0,
-      pricePerCredit: 0,
-      co2Offset: 0
+      saplingsPlanted: 0
     });
 
     toast({
@@ -292,37 +289,15 @@ export default function ProjectOwnerDashboard() {
                         />
                       </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div>
-                          <Label htmlFor="credits">Credits Generated</Label>
-                          <Input
-                            id="credits"
-                            type="number"
-                            value={newProject.creditsGenerated || ''}
-                            onChange={(e) => setNewProject({ ...newProject, creditsGenerated: parseInt(e.target.value) || 0 })}
-                            placeholder="0"
-                          />
-                        </div>
-                        <div>
-                          <Label htmlFor="price">Price per Credit (₹)</Label>
-                          <Input
-                            id="price"
-                            type="number"
-                            value={newProject.pricePerCredit || ''}
-                            onChange={(e) => setNewProject({ ...newProject, pricePerCredit: parseInt(e.target.value) || 0 })}
-                            placeholder="0"
-                          />
-                        </div>
-                        <div>
-                          <Label htmlFor="co2">CO₂ Offset (tons)</Label>
-                          <Input
-                            id="co2"
-                            type="number"
-                            value={newProject.co2Offset || ''}
-                            onChange={(e) => setNewProject({ ...newProject, co2Offset: parseInt(e.target.value) || 0 })}
-                            placeholder="0"
-                          />
-                        </div>
+                      <div>
+                        <Label htmlFor="saplings">No. of Saplings Planted</Label>
+                        <Input
+                          id="saplings"
+                          type="number"
+                          value={newProject.saplingsPlanted || ''}
+                          onChange={(e) => setNewProject({ ...newProject, saplingsPlanted: parseInt(e.target.value) || 0 })}
+                          placeholder="0"
+                        />
                       </div>
 
                       <Button onClick={handleSubmitProject} className="w-full btn-ocean">
@@ -358,18 +333,10 @@ export default function ProjectOwnerDashboard() {
                             </div>
                           </div>
                           
-                          <div className="grid grid-cols-3 gap-4 text-sm">
+                          <div className="text-sm">
                             <div>
-                              <p className="text-muted-foreground">Credits Generated</p>
-                              <p className="font-semibold">{project.creditsGenerated.toLocaleString()}</p>
-                            </div>
-                            <div>
-                              <p className="text-muted-foreground">Price per Credit</p>
-                              <p className="font-semibold">₹{project.pricePerCredit}</p>
-                            </div>
-                            <div>
-                              <p className="text-muted-foreground">CO₂ Offset</p>
-                              <p className="font-semibold">{project.co2Offset} tons</p>
+                              <p className="text-muted-foreground">Saplings Planted</p>
+                              <p className="font-semibold">{project.saplingsPlanted?.toLocaleString() || 0}</p>
                             </div>
                           </div>
                         </CardContent>
