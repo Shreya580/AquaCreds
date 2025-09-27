@@ -126,7 +126,7 @@ export default function Marketplace() {
         buyerId: user.id,
         credits: purchaseAmount,
         totalAmount: totalCost,
-        co2Offset: purchaseAmount * 2, // Assuming 2 tons CO2 per credit
+        co2Offset: purchaseAmount * 1, // 1 carbon credit = 1 ton of CO2 offset
         timestamp: new Date().toISOString()
       };
 

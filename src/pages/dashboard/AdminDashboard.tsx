@@ -310,7 +310,7 @@ export default function AdminDashboard() {
               <CardContent className="space-y-3">
                 <div className="flex items-center space-x-2">
                   <CheckCircle className="h-4 w-4 text-success" />
-                  <span className="text-sm">VCS Standards Compliance</span>
+                  <span className="text-sm">IPCC guidelines compliance</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <CheckCircle className="h-4 w-4 text-success" />

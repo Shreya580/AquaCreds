@@ -381,7 +381,7 @@ export default function VerifierDashboard() {
               <CardContent className="text-sm space-y-3">
                 <div>
                   <h4 className="font-medium mb-1">Blue Carbon Standards</h4>
-                  <p className="text-muted-foreground">Ensure projects meet VCS and Gold Standard requirements for blue carbon.</p>
+                  <p className="text-muted-foreground">Ensure projects meet IPCC guidelines or MoEFCC Guidelines.</p>
                 </div>
                 <div>
                   <h4 className="font-medium mb-1">Additionality</h4>

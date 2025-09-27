@@ -65,7 +65,7 @@ export function initializeDemoData() {
         status: 'Approved',
         ownerId: 'demo-owner-1',
         ownerName: 'Coastal Conservation Trust',
-        co2Offset: 2400,
+        co2Offset: 1200,
         createdAt: '2024-01-15',
         verifiedAt: '2024-02-01'
       },
@@ -81,7 +81,7 @@ export function initializeDemoData() {
         status: 'Approved',
         ownerId: 'demo-owner-2',
         ownerName: 'Marine Conservation Society',
-        co2Offset: 1700,
+        co2Offset: 850,
         createdAt: '2024-02-10',
         verifiedAt: '2024-02-25'
       },
@@ -97,7 +97,7 @@ export function initializeDemoData() {
         status: 'Approved',
         ownerId: 'demo-owner-3',
         ownerName: 'Island Ecology Foundation',
-        co2Offset: 1900,
+        co2Offset: 950,
         createdAt: '2024-01-20',
         verifiedAt: '2024-02-05'
       }
