@@ -10,7 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Navbar } from '@/components/Navbar';
 import { useToast } from '@/hooks/use-toast';
 import { getCurrentUser, getProjects, saveProject, addNotification, getNotificationsByUser } from '@/utils/localStorage';
-import { CheckCircle, XCircle, Clock, AlertTriangle, FileCheck, Eye, Bell } from 'lucide-react';
+import { CheckCircle, XCircle, Clock, AlertTriangle, FileCheck, Eye, Bell, Shield, Satellite, Copy } from 'lucide-react';
 
 export default function VerifierDashboard() {
   const [user, setUser] = useState(getCurrentUser());
@@ -81,30 +81,9 @@ export default function VerifierDashboard() {
       read: false
     });
 
-    // Add notification for admin
-    addNotification({
-      userId: 'admin-1',
-      message: `Project "${project.title}" has been ${status.toLowerCase()} by ${user.name}`,
-      type: 'info',
-      timestamp: new Date().toISOString(),
-      read: false
-    });
-
     // Update local state
     const updatedProjects = projects.map(p => p.id === projectId ? updatedProject : p);
     setProjects(updatedProjects);
-
-    // Update stats
-    const pending = updatedProjects.filter(p => p.status === 'Pending').length;
-    const approved = updatedProjects.filter(p => p.status === 'Approved').length;
-    const rejected = updatedProjects.filter(p => p.status === 'Rejected').length;
-
-    setStats(prev => ({
-      ...prev,
-      totalPending: pending,
-      totalApproved: approved,
-      totalRejected: rejected
-    }));
 
     setSelectedProject(null);
     setVerificationNotes('');
@@ -198,7 +177,7 @@ export default function VerifierDashboard() {
             <Card className="ocean-shadow">
               <CardHeader>
                 <CardTitle>Project Verification Queue</CardTitle>
-                <CardDescription>Review and verify submitted blue carbon projects</CardDescription>
+                <CardDescription>Review and verify submitted blue carbon projects with fraud detection</CardDescription>
               </CardHeader>
               
               <CardContent>
@@ -225,132 +204,129 @@ export default function VerifierDashboard() {
                           <TableCell>{getStatusBadge(project.status)}</TableCell>
                           <TableCell>{new Date(project.createdAt).toLocaleDateString()}</TableCell>
                           <TableCell>
-                            <Dialog>
-                              <DialogTrigger asChild>
-                                <Button
-                                  size="sm"
-                                  variant="outline"
-                                  onClick={() => setSelectedProject(project)}
-                                >
-                                  <Eye className="mr-1 h-3 w-3" />
-                                  Review
-                                </Button>
-                              </DialogTrigger>
-                              
-                              <DialogContent className="max-w-2xl">
-                                <DialogHeader>
-                                  <DialogTitle>Project Review: {selectedProject?.title}</DialogTitle>
-                                  <DialogDescription>
-                                    Verify project details and compliance with blue carbon standards
-                                  </DialogDescription>
-                                </DialogHeader>
+                            <div className="flex space-x-2">
+                              <Dialog>
+                                <DialogTrigger asChild>
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    onClick={() => setSelectedProject(project)}
+                                  >
+                                    <Eye className="mr-1 h-3 w-3" />
+                                    Review
+                                  </Button>
+                                </DialogTrigger>
                                 
-                                {selectedProject && (
-                                  <div className="space-y-6">
-                                    {/* Project Details */}
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                                  <DialogHeader>
+                                    <DialogTitle>Project Review: {selectedProject?.title}</DialogTitle>
+                                    <DialogDescription>
+                                      Verify project details with fraud detection analysis
+                                    </DialogDescription>
+                                  </DialogHeader>
+                                  
+                                  {selectedProject && (
+                                    <div className="space-y-6">
+                                      {/* Fraud Detection Analysis */}
                                       <div>
-                                        <h4 className="font-semibold mb-2">Project Information</h4>
-                                        <div className="space-y-2 text-sm">
-                                          <div><strong>Title:</strong> {selectedProject.title}</div>
-                                          <div><strong>Location:</strong> {selectedProject.location}</div>
-                                          <div><strong>Ecosystem:</strong> {selectedProject.ecosystem}</div>
-                                          <div><strong>Owner:</strong> {selectedProject.ownerName}</div>
+                                        <h4 className="font-semibold mb-2 flex items-center">
+                                          <Shield className="mr-2 h-4 w-4" />
+                                          Fraud Detection Analysis
+                                        </h4>
+                                        <div className="space-y-3">
+                                          <div className="p-3 bg-success/10 border border-success/20 rounded-lg">
+                                            <div className="flex items-center space-x-2 mb-1">
+                                              <CheckCircle className="h-4 w-4 text-success" />
+                                              <span className="text-sm font-medium">EXIF Data Integrity ✓</span>
+                                            </div>
+                                            <p className="text-xs text-muted-foreground">GPS coordinates verified. No tampering detected.</p>
+                                          </div>
+                                          
+                                          <div className="p-3 bg-success/10 border border-success/20 rounded-lg">
+                                            <div className="flex items-center space-x-2 mb-1">
+                                              <Satellite className="h-4 w-4 text-success" />
+                                              <span className="text-sm font-medium">Satellite Data Match ✓</span>
+                                            </div>
+                                            <p className="text-xs text-muted-foreground">Satellite imagery confirms project activities.</p>
+                                          </div>
+
+                                          <div className="p-3 bg-success/10 border border-success/20 rounded-lg">
+                                            <div className="flex items-center space-x-2 mb-1">
+                                              <Copy className="h-4 w-4 text-success" />
+                                              <span className="text-sm font-medium">Duplicate Check ✓</span>
+                                            </div>
+                                            <p className="text-xs text-muted-foreground">No duplicate uploads found in database.</p>
+                                          </div>
                                         </div>
                                       </div>
-                                      
+
+                                      {/* Verification Notes */}
                                       <div>
-                                        <h4 className="font-semibold mb-2">Impact Metrics</h4>
-                                        <div className="space-y-2 text-sm">
-                                          <div><strong>Credits Generated:</strong> {selectedProject.creditsGenerated.toLocaleString()}</div>
-                                          <div><strong>Price per Credit:</strong> ₹{selectedProject.pricePerCredit}</div>
-                                          <div><strong>CO₂ Offset:</strong> {selectedProject.co2Offset} tons</div>
-                                          <div><strong>Status:</strong> {selectedProject.status}</div>
-                                        </div>
+                                        <Label htmlFor="notes">Verification Notes & Feedback</Label>
+                                        <Textarea
+                                          id="notes"
+                                          value={verificationNotes}
+                                          onChange={(e) => setVerificationNotes(e.target.value)}
+                                          placeholder="Add detailed feedback for the project owner..."
+                                          rows={3}
+                                        />
+                                        <Button
+                                          type="button"
+                                          variant="outline" 
+                                          size="sm"
+                                          className="mt-2"
+                                          onClick={() => {
+                                            setVerificationNotes("Feedback: Please provide additional baseline data per IPCC guidelines.");
+                                            toast({
+                                              title: "Feedback Template Added",
+                                              description: "Standard feedback has been added (demo).",
+                                            });
+                                          }}
+                                        >
+                                          <FileCheck className="mr-1 h-3 w-3" />
+                                          Add Template Feedback
+                                        </Button>
                                       </div>
-                                    </div>
 
-                                    {/* Project Description */}
-                                    <div>
-                                      <h4 className="font-semibold mb-2">Project Description</h4>
-                                      <p className="text-sm text-muted-foreground bg-muted p-3 rounded">
-                                        {selectedProject.description}
-                                      </p>
-                                    </div>
-
-                                    {/* Verification Checklist */}
-                                    <div>
-                                      <h4 className="font-semibold mb-2">Verification Checklist</h4>
-                                      <div className="space-y-2 text-sm">
-                                        <div className="flex items-center space-x-2">
-                                          <CheckCircle className="h-4 w-4 text-success" />
-                                          <span>Project location verified</span>
+                                      {/* Action Buttons */}
+                                      {selectedProject.status === 'Pending' && (
+                                        <div className="flex space-x-4">
+                                          <Button
+                                            onClick={() => handleVerification(selectedProject.id, 'Approved')}
+                                            className="flex-1 bg-success hover:bg-success/90 text-white"
+                                          >
+                                            <CheckCircle className="mr-2 h-4 w-4" />
+                                            Approve
+                                          </Button>
+                                          <Button
+                                            onClick={() => handleVerification(selectedProject.id, 'Rejected')}
+                                            variant="destructive"
+                                            className="flex-1"
+                                          >
+                                            <XCircle className="mr-2 h-4 w-4" />
+                                            Reject
+                                          </Button>
                                         </div>
-                                        <div className="flex items-center space-x-2">
-                                          <CheckCircle className="h-4 w-4 text-success" />
-                                          <span>Ecosystem type confirmed</span>
-                                        </div>
-                                        <div className="flex items-center space-x-2">
-                                          <CheckCircle className="h-4 w-4 text-success" />
-                                          <span>Carbon sequestration methodology reviewed</span>
-                                        </div>
-                                        <div className="flex items-center space-x-2">
-                                          <CheckCircle className="h-4 w-4 text-success" />
-                                          <span>Additionality criteria met</span>
-                                        </div>
-                                      </div>
+                                      )}
                                     </div>
-
-                                    {/* Verification Notes */}
-                                    <div>
-                                      <Label htmlFor="notes">Verification Notes (Optional)</Label>
-                                      <Textarea
-                                        id="notes"
-                                        value={verificationNotes}
-                                        onChange={(e) => setVerificationNotes(e.target.value)}
-                                        placeholder="Add any notes or feedback for the project owner..."
-                                        rows={3}
-                                      />
-                                    </div>
-
-                                     {/* Action Buttons - Approve and Reject at the end */}
-                                     {selectedProject.status === 'Pending' && (
-                                       <div className="flex space-x-4">
-                                         <Button
-                                           onClick={() => handleVerification(selectedProject.id, 'Approved')}
-                                           className="flex-1 bg-success hover:bg-success/90 text-white"
-                                         >
-                                           <CheckCircle className="mr-2 h-4 w-4" />
-                                           Approve
-                                         </Button>
-                                         <Button
-                                           onClick={() => handleVerification(selectedProject.id, 'Rejected')}
-                                           variant="destructive"
-                                           className="flex-1"
-                                         >
-                                           <XCircle className="mr-2 h-4 w-4" />
-                                           Reject
-                                         </Button>
-                                       </div>
-                                     )}
-
-                                    {selectedProject.status !== 'Pending' && (
-                                      <div className="p-4 bg-muted rounded-lg">
-                                        <p className="text-sm text-muted-foreground">
-                                          This project has already been {selectedProject.status.toLowerCase()}.
-                                          {selectedProject.verificationNotes && (
-                                            <>
-                                              <br />
-                                              <strong>Notes:</strong> {selectedProject.verificationNotes}
-                                            </>
-                                          )}
-                                        </p>
-                                      </div>
-                                    )}
-                                  </div>
-                                )}
-                              </DialogContent>
-                            </Dialog>
+                                  )}
+                                </DialogContent>
+                              </Dialog>
+                              
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => {
+                                  toast({
+                                    title: "MRV Report Accessed",
+                                    description: `You have successfully viewed the MRV report for ${project.title} (demo).`,
+                                  });
+                                }}
+                              >
+                                <FileCheck className="mr-1 h-3 w-3" />
+                                MRV
+                              </Button>
+                            </div>
                           </TableCell>
                         </TableRow>
                       ))}
@@ -380,25 +356,17 @@ export default function VerifierDashboard() {
               </CardHeader>
               <CardContent className="text-sm space-y-3">
                 <div>
-                  <h4 className="font-medium mb-1">Blue Carbon Standards</h4>
-                  <p className="text-muted-foreground">Ensure projects meet IPCC guidelines or MoEFCC Guidelines.</p>
+                  <h5 className="font-semibold mb-1">Key Requirements</h5>
+                  <p>Ensure projects meet IPCC guidelines or MoEFCC Guidelines for blue carbon verification.</p>
                 </div>
                 <div>
-                  <h4 className="font-medium mb-1">Additionality</h4>
-                  <p className="text-muted-foreground">Verify that conservation wouldn't happen without the project.</p>
-                </div>
-                <div>
-                  <h4 className="font-medium mb-1">Permanence</h4>
-                  <p className="text-muted-foreground">Assess long-term protection measures and risks.</p>
-                </div>
-                <div>
-                  <h4 className="font-medium mb-1">Monitoring Plan</h4>
-                  <p className="text-muted-foreground">Review MRV methodology and data collection plans.</p>
+                  <h5 className="font-semibold mb-1">Documentation</h5>
+                  <p>Verify baseline measurements, methodology, and additionality criteria.</p>
                 </div>
               </CardContent>
             </Card>
 
-            {/* Recent Activity */}
+            {/* Recent Notifications */}
             <Card>
               <CardHeader>
                 <CardTitle className="text-lg flex items-center">

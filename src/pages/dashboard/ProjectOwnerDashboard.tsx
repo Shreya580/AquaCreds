@@ -10,7 +10,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Navbar } from '@/components/Navbar';
 import { useToast } from '@/hooks/use-toast';
 import { getCurrentUser, getProjectsByOwner, saveProject, Project, getNotificationsByUser, addNotification } from '@/utils/localStorage';
-import { Plus, TreePine, DollarSign, TrendingUp, Bell, MapPin, Calendar, CheckCircle, Clock, XCircle } from 'lucide-react';
+import { Plus, TreePine, DollarSign, TrendingUp, Bell, MapPin, Calendar, CheckCircle, Clock, XCircle, Upload, FileText, Award, Eye } from 'lucide-react';
 
 export default function ProjectOwnerDashboard() {
   const [user, setUser] = useState(getCurrentUser());
@@ -22,7 +22,8 @@ export default function ProjectOwnerDashboard() {
     location: '',
     ecosystem: '',
     description: '',
-    saplingsPlanted: 0
+    saplingsPlanted: 0,
+    geoTaggedPhoto: null as File | null
   });
   const [stats, setStats] = useState({
     totalProjects: 0,
@@ -116,7 +117,8 @@ export default function ProjectOwnerDashboard() {
       location: '',
       ecosystem: '',
       description: '',
-      saplingsPlanted: 0
+      saplingsPlanted: 0,
+      geoTaggedPhoto: null
     });
 
     toast({
@@ -220,6 +222,48 @@ export default function ProjectOwnerDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
+            {/* Issued Credits Section */}
+            <Card className="ocean-shadow">
+              <CardHeader>
+                <CardTitle>Issued Credits</CardTitle>
+                <CardDescription>Track your approved and issued carbon credits</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {projects.filter(p => p.status === 'Approved').map((project) => (
+                    <Card key={`credit-${project.id}`} className="bg-success/5 border-success/20">
+                      <CardContent className="p-4">
+                        <div className="flex items-center justify-between mb-2">
+                          <h4 className="font-semibold text-sm">{project.title}</h4>
+                          <CheckCircle className="h-4 w-4 text-success" />
+                        </div>
+                        <div className="space-y-1 text-sm">
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Credits Issued:</span>
+                            <span className="font-semibold text-success">{project.creditsGenerated?.toLocaleString() || 0}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">CO₂ Offset:</span>
+                            <span className="font-semibold">{project.creditsGenerated || 0} tons</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Status:</span>
+                            <span className="text-success font-medium">Issued</span>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                  {projects.filter(p => p.status === 'Approved').length === 0 && (
+                    <div className="col-span-3 text-center py-8">
+                      <Award className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                      <p className="text-muted-foreground">No credits issued yet. Credits will appear here once projects are approved.</p>
+                    </div>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+
             {/* Projects Section */}
             <Card className="ocean-shadow">
               <CardHeader className="flex flex-row items-center justify-between">
@@ -300,6 +344,45 @@ export default function ProjectOwnerDashboard() {
                         />
                       </div>
 
+                      <div>
+                        <Label htmlFor="geoPhoto">Geo-tagged Photo Upload</Label>
+                        <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-6 text-center hover:border-primary/50 transition-colors">
+                          <Upload className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
+                          <p className="text-sm text-muted-foreground mb-2">
+                            Upload geo-tagged photos of your project site
+                          </p>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            multiple
+                            className="hidden"
+                            id="geoPhoto"
+                            onChange={(e) => {
+                              if (e.target.files?.[0]) {
+                                setNewProject({ ...newProject, geoTaggedPhoto: e.target.files[0] });
+                                toast({
+                                  title: "Photo Uploaded",
+                                  description: "Geo-tagged photo has been uploaded successfully (demo).",
+                                });
+                              }
+                            }}
+                          />
+                          <Button 
+                            type="button" 
+                            variant="outline" 
+                            onClick={() => document.getElementById('geoPhoto')?.click()}
+                          >
+                            <Upload className="mr-2 h-4 w-4" />
+                            Choose Files
+                          </Button>
+                          {newProject.geoTaggedPhoto && (
+                            <p className="text-xs text-success mt-2">
+                              ✓ {newProject.geoTaggedPhoto.name} uploaded
+                            </p>
+                          )}
+                        </div>
+                      </div>
+
                       <Button onClick={handleSubmitProject} className="w-full btn-ocean">
                         Submit for Verification
                       </Button>
@@ -327,9 +410,27 @@ export default function ProjectOwnerDashboard() {
                                 {project.location}
                               </div>
                             </div>
-                            <div className={`flex items-center space-x-1 ${getStatusColor(project.status)}`}>
-                              {getStatusIcon(project.status)}
-                              <span className="text-sm font-medium">{project.status}</span>
+                            <div className="flex items-center space-x-2">
+                              <div className={`flex items-center space-x-1 ${getStatusColor(project.status)}`}>
+                                {getStatusIcon(project.status)}
+                                <span className="text-sm font-medium">{project.status}</span>
+                              </div>
+                              {project.status === 'Rejected' && (
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  onClick={() => {
+                                    toast({
+                                      title: "MRV Report Viewed",
+                                      description: "Rejection reason: The project documentation needs to include more detailed baseline measurements and community impact assessments as per IPCC guidelines.",
+                                    });
+                                  }}
+                                  className="h-6 px-2 text-xs"
+                                >
+                                  <Eye className="mr-1 h-3 w-3" />
+                                  MRV Report
+                                </Button>
+                              )}
                             </div>
                           </div>
                           
@@ -374,6 +475,19 @@ export default function ProjectOwnerDashboard() {
                     Help Center
                   </Button>
                 </Link>
+                <Button 
+                  variant="outline" 
+                  className="w-full justify-start"
+                  onClick={() => {
+                    toast({
+                      title: "Loyalty Rewards Accessed",
+                      description: "You have successfully accessed your loyalty rewards and batch information (demo).",
+                    });
+                  }}
+                >
+                  <Award className="mr-2 h-4 w-4" />
+                  View Loyalty Rewards
+                </Button>
               </CardContent>
             </Card>
 

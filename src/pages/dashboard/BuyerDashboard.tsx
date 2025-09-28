@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Navbar } from '@/components/Navbar';
 import { useToast } from '@/hooks/use-toast';
 import { getCurrentUser, getUserWallet, getPurchasesByBuyer, getProjects, getNotificationsByUser } from '@/utils/localStorage';
-import { ShoppingCart, CreditCard, TrendingUp, Download, Wallet, TreePine, Bell, Award } from 'lucide-react';
+import { ShoppingCart, CreditCard, TrendingUp, Download, Wallet, TreePine, Bell, Award, Gavel, FileText } from 'lucide-react';
 
 export default function BuyerDashboard() {
   const [user, setUser] = useState(getCurrentUser());
@@ -55,8 +55,15 @@ export default function BuyerDashboard() {
   const downloadCertificate = (purchase: any) => {
     // Simulate PDF download
     toast({
-      title: "Certificate Downloaded",
-      description: `Impact certificate for ${purchase.credits} credits has been downloaded.`,
+      title: "Certificate Downloaded Successfully",
+      description: `Impact certificate and ownership report for ${purchase.credits} credits has been downloaded (demo).`,
+    });
+  };
+
+  const placeBid = () => {
+    toast({
+      title: "Bid Placed Successfully",
+      description: "Your bid of ₹450 per credit for upcoming mangrove credits has been placed in the reverse auction (demo).",
     });
   };
 
@@ -181,6 +188,56 @@ export default function BuyerDashboard() {
               </CardContent>
             </Card>
 
+            {/* Reverse Auction Section */}
+            <Card className="coral-shadow">
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Gavel className="mr-2 h-5 w-5" />
+                  Reverse Auction
+                </CardTitle>
+                <CardDescription>Place bids on upcoming credit releases</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="p-4 border rounded-lg bg-gradient-to-r from-primary/5 to-success/5">
+                    <h4 className="font-semibold mb-2">Upcoming: Mangrove Restoration Credits</h4>
+                    <div className="grid grid-cols-2 gap-4 text-sm mb-3">
+                      <div>
+                        <span className="text-muted-foreground">Available:</span>
+                        <span className="font-semibold ml-2">2,500 credits</span>
+                      </div>
+                      <div>
+                        <span className="text-muted-foreground">Min. Bid:</span>
+                        <span className="font-semibold ml-2">₹400</span>
+                      </div>
+                      <div>
+                        <span className="text-muted-foreground">Auction Ends:</span>
+                        <span className="font-semibold ml-2">3 days</span>
+                      </div>
+                      <div>
+                        <span className="text-muted-foreground">Current High:</span>
+                        <span className="font-semibold ml-2 text-success">₹435</span>
+                      </div>
+                    </div>
+                    <Button onClick={placeBid} className="w-full">
+                      <Gavel className="mr-2 h-4 w-4" />
+                      Place Bid (₹450)
+                    </Button>
+                  </div>
+                  
+                  <div className="p-4 border rounded-lg opacity-60">
+                    <h4 className="font-semibold mb-2">Seagrass Conservation Credits</h4>
+                    <div className="text-sm text-muted-foreground mb-3">
+                      <p>1,200 credits • Starting bid: ₹380 • Starts in 5 days</p>
+                    </div>
+                    <Button variant="outline" disabled className="w-full">
+                      Auction Not Started
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
             {/* Purchase History */}
             <Card className="ocean-shadow">
               <CardHeader className="flex flex-row items-center justify-between">
@@ -243,16 +300,32 @@ export default function BuyerDashboard() {
                                 <p className="font-semibold">{purchase.co2Offset} tons</p>
                               </div>
                               <div>
-                                <p className="text-muted-foreground">Certificate</p>
-                                <Button
-                                  size="sm"
-                                  variant="outline"
-                                  onClick={() => downloadCertificate(purchase)}
-                                  className="h-6 px-2 text-xs"
-                                >
-                                  <Download className="mr-1 h-3 w-3" />
-                                  Download
-                                </Button>
+                                <p className="text-muted-foreground">Certificate & Report</p>
+                                <div className="flex space-x-1">
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    onClick={() => downloadCertificate(purchase)}
+                                    className="h-6 px-2 text-xs"
+                                  >
+                                    <Download className="mr-1 h-3 w-3" />
+                                    Certificate
+                                  </Button>
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    onClick={() => {
+                                      toast({
+                                        title: "Ownership Report Downloaded",
+                                        description: "Detailed ownership report with transaction history downloaded (demo).",
+                                      });
+                                    }}
+                                    className="h-6 px-2 text-xs"
+                                  >
+                                    <FileText className="mr-1 h-3 w-3" />
+                                    Report
+                                  </Button>
+                                </div>
                               </div>
                             </div>
                           </CardContent>

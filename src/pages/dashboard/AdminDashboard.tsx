@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 import { Navbar } from '@/components/Navbar';
 import { getUsers, getProjects, getPurchases, getAnalyticsData, getNotificationsByUser } from '@/utils/localStorage';
-import { Users, TrendingUp, CreditCard, Shield, Bell, BarChart3, CheckCircle } from 'lucide-react';
+import { Users, TrendingUp, CreditCard, Shield, Bell, BarChart3, CheckCircle, UserPlus, UserMinus, AlertTriangle, Link as ChainIcon, Eye, Settings } from 'lucide-react';
 
 export default function AdminDashboard() {
   const [user, setUser] = useState(() => {
@@ -26,6 +28,7 @@ export default function AdminDashboard() {
     activeProjects: 0
   });
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   useEffect(() => {
     if (!user || user.role !== 'Admin') {
@@ -267,6 +270,112 @@ export default function AdminDashboard() {
                       </div>
                     </div>
                   ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Role Management */}
+            <Card className="ocean-shadow">
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <Settings className="mr-2 h-5 w-5" />
+                  Role Management
+                </CardTitle>
+                <CardDescription>Manage user roles and permissions</CardDescription>
+              </CardHeader>
+              
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <Button 
+                    className="flex items-center justify-center p-6 h-auto flex-col space-y-2"
+                    onClick={() => {
+                      toast({
+                        title: "Verifier Added Successfully",
+                        description: "New verifier role has been assigned to user@example.com (demo).",
+                      });
+                    }}
+                  >
+                    <UserPlus className="h-8 w-8" />
+                    <span>Add Verifier</span>
+                  </Button>
+                  
+                  <Button 
+                    variant="outline"
+                    className="flex items-center justify-center p-6 h-auto flex-col space-y-2"
+                    onClick={() => {
+                      toast({
+                        title: "Verifier Removed Successfully",
+                        description: "Verifier role has been removed from specified user (demo).",
+                      });
+                    }}
+                  >
+                    <UserMinus className="h-8 w-8" />
+                    <span>Remove Verifier</span>
+                  </Button>
+                  
+                  <Button 
+                    variant="destructive"
+                    className="flex items-center justify-center p-6 h-auto flex-col space-y-2"
+                    onClick={() => {
+                      toast({
+                        title: "User Flagged Successfully",
+                        description: "Suspicious user has been flagged and restricted (demo).",
+                      });
+                    }}
+                  >
+                    <AlertTriangle className="h-8 w-8" />
+                    <span>Flag Suspicious User</span>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Blockchain Explorer */}
+            <Card className="ocean-shadow">
+              <CardHeader>
+                <CardTitle className="flex items-center">
+                  <ChainIcon className="mr-2 h-5 w-5" />
+                  Blockchain Explorer
+                </CardTitle>
+                <CardDescription>Track transactions and project activities on blockchain</CardDescription>
+              </CardHeader>
+              
+              <CardContent>
+                <div className="space-y-4">
+                  <div className="p-4 border rounded-lg bg-gradient-to-r from-primary/5 to-success/5">
+                    <div className="flex items-center justify-between mb-2">
+                      <h4 className="font-semibold">Latest Transactions</h4>
+                      <Button variant="outline" size="sm">
+                        <Eye className="mr-1 h-3 w-3" />
+                        View All
+                      </Button>
+                    </div>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between items-center p-2 bg-muted rounded">
+                        <span>Credit Issuance - Project #1847</span>
+                        <span className="text-success font-medium">2,500 Credits</span>
+                      </div>
+                      <div className="flex justify-between items-center p-2 bg-muted rounded">
+                        <span>Marketplace Purchase - Buyer #234</span>
+                        <span className="text-primary font-medium">500 Credits</span>
+                      </div>
+                      <div className="flex justify-between items-center p-2 bg-muted rounded">
+                        <span>Project Verification - Verifier #12</span>
+                        <span className="text-warning font-medium">Approved</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="p-3 bg-muted rounded-lg">
+                      <div className="text-2xl font-bold text-primary">24,567</div>
+                      <div className="text-sm text-muted-foreground">Total Transactions</div>
+                    </div>
+                    <div className="p-3 bg-muted rounded-lg">
+                      <div className="text-2xl font-bold text-success">98.7%</div>
+                      <div className="text-sm text-muted-foreground">Network Uptime</div>
+                    </div>
+                  </div>
                 </div>
               </CardContent>
             </Card>
